@@ -3,113 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Милана лох</title>
+    <title>Опрос: Вступить в команду?</title>
     <style>
-        /* Основной стиль страницы */
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #fff;
-            background-image: url('https://jcup.ru/images/zakat-v-jpg.webp'); /* Ссылка на изображение фона */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-
-        /* Шапка сайта */
-        header {
-            background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный фон */
-            color: #fff;
-            padding: 40px 0;
+            font-family: Arial, sans-serif;
             text-align: center;
+            margin-top: 50px;
         }
-
-        /* Содержание */
-        .content {
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный фон для контента */
-            border-radius: 10px;
-            margin: 50px auto;
-            padding: 30px;
-            max-width: 800px;
-        }
-
-        /* Заголовок */
-        .content h1 {
-            font-size: 2.8em;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        /* Основной текст */
-        .content p {
-            font-size: 1.3em;
+        .question {
             margin-bottom: 20px;
         }
-
-        /* Дата */
-        .date {
-            font-size: 1.5em;
-            margin: 20px 0;
-            font-weight: bold;
+        .question h3 {
+            font-size: 20px;
         }
-
-        /* Кнопка WhatsApp */
-        .btn {
-            background-color: #25D366; /* Зеленый цвет WhatsApp */
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            font-size: 1.4em;
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
             cursor: pointer;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
         }
-
-        .btn:hover {
-            background-color: #128C7E;
+        .container {
+            width: 80%;
+            margin: 0 auto;
         }
-
-        /* Адаптивность для мобильных устройств */
-        @media (max-width: 600px) {
-            .content {
-                margin: 10px;
-                padding: 10px;
-            }
-
-            .content h1 {
-                font-size: 1em;
-            }
-
-            .content p {
-                font-size: 1em;
-            }
-
-            .btn {
-                font-size: 1.2em;
-                padding: 12px 25px;
-            }
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Милана лох</h1>
-</header>
+    <div class="container">
+        <h1>Хотите вступить в команду?</h1>
+        <p>Ответьте на 10 вопросов, чтобы мы могли понять, подходите ли вы для нашей команды.</p>
 
-<div class="content">
-    <h1>Дорогие друзья!</h1>
-    <p>Мы узнали что милана лох.</p>
-    <p class="date">Дата: 3 декабря 2025 года</p>
-    <p>Место проведения: обычный город Алматы, 10.</p>
-    <p>Пожалуйста, подтвердите ваше присутствие до 2 декабря.</p>
+        <form id="surveyForm">
+            <div class="question">
+                <h3>1. У вас есть опыт работы в команде?</h3>
+                <button type="button" onclick="recordAnswer('q1', 'yes')">Да</button>
+                <button type="button" onclick="recordAnswer('q1', 'no')">Нет</button>
+            </div>
 
-    <!-- Кнопка для связи через WhatsApp -->
-    <a href="https://wa.me/77056537178" class="btn" target="_blank">Подтвердить участие что Милана лох в WhatsApp</a>
-</div>
+            <div class="question">
+                <h3>2. Вы готовы играть в ночное время?</h3>
+                <button type="button" onclick="recordAnswer('q2', 'yes')">Да</button>
+                <button type="button" onclick="recordAnswer('q2', 'no')">Нет</button>
+            </div>
+
+            <div class="question">
+                <h3>3. Вы умеете играть под давлением?</h3>
+                <button type="button" onclick="recordAnswer('q3', 'yes')">Да</button>
+                <button type="button" onclick="recordAnswer('q3', 'no')">Нет</button>
+            </div>
+
+            <div class="question">
+                <h3>4. У вас есть опыт в игре?</h3>
+                <button type="button" onclick="recordAnswer('q4', 'yes')">Да</button>
+                <button type="button" onclick="recordAnswer('q4', 'no')">Нет</button>
+            </div>
+
+            <div class="question">
+                <h3>5. Вы умеете работать группе</h3>
+                <button type="button" onclick="recordAnswer('q5', 'yes')">Да</button>
+                <button type="button" onclick="recordAnswer('q5', 'no')">Нет</button>
+            </div>
+
+            <div class="question">
+                <h3>6. Вы готовы изучать новые подачи?</h3>
+                <button type="button" onclick="recordAnswer('q6', 'yes')">Да</button>
+                <button type="button" onclick="recordAnswer('q6', 'no')">Нет</button>
+            </div>
+
+            <div class="question">
+                <h3>7. Вы хотите играть с нами?</h3>
+                <button type="button" onclick="recordAnswer('q7', 'yes')">Да</button>
+                <button type="button" onclick="recordAnswer('q7', 'no')">Нет</button>
+            </div>
+
+            <div class="question">
+                <h3>8. У вас есть опыт в игре?</h3>
+                <button type="button" onclick="recordAnswer('q8', 'yes')">Да</button>
+                <button type="button" onclick="recordAnswer('q8', 'no')">Нет</button>
+            </div>
+
+            <div class="question">
+                <h3>9. Вы можете работать в гибком графике?</h3>
+                <button type="button" onclick="recordAnswer('q9', 'yes')">Да</button>
+                <button type="button" onclick="recordAnswer('q9', 'no')">Нет</button>
+            </div>
+
+            <div class="question">
+                <h3>10. Вы готовы работать в команде и делиться знаниями?</h3>
+                <button type="button" onclick="recordAnswer('q10', 'yes')">Да</button>
+                <button type="button" onclick="recordAnswer('q10', 'no')">Нет</button>
+            </div>
+
+            <button type="button" onclick="submitSurvey()">Отправить</button>
+        </form>
+
+        <div id="scoreDisplay" class="score" style="display: none;">
+            <p>Вы выбрали <span id="score"></span> ответов "Да".</p>
+        </div>
+    </div>
+
+    <script>
+        let answers = {};
+
+        function recordAnswer(question, answer) {
+            answers[question] = answer;
+        }
+
+        function submitSurvey() {
+            if (Object.keys(answers).length < 10) {
+                alert("Пожалуйста, ответьте на все вопросы.");
+                return;
+            }
+
+            let yesAnswers = 0;
+            for (let question in answers) {
+                if (answers[question] === "yes") {
+                    yesAnswers++;
+                }
+            }
+
+            // Показываем балл на экране
+            document.getElementById("scoreDisplay").style.display = "block";
+            document.getElementById("score").textContent = yesAnswers;
+
+            // Если пользователь набрал 7 и более ответов "Да", переходим к группе в Telegram
+            if (yesAnswers >= 7) {
+                alert("Поздравляем, вы подходите для команды!");
+                window.location.href = "https://t.me/RRBOLOX"; // Ссылка на вашу Telegram группу
+            } else {
+                alert("К сожалению, вы не подходите для команды.");
+            }
+        }
+    </script>
 
 </body>
 </html>
