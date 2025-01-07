@@ -6,30 +6,84 @@
     <title>Опрос: Вступить в команду?</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
-            margin-top: 50px;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 30px;
         }
         .question {
             margin-bottom: 20px;
         }
         .question h3 {
-            font-size: 20px;
+            font-size: 18px;
+            color: #333;
         }
         button {
-            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
             font-size: 16px;
             margin: 10px;
             cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.2s;
         }
-        .container {
-            width: 80%;
-            margin: 0 auto;
+        button:hover {
+            background-color: #2980b9;
+        }
+        button:active {
+            transform: scale(0.95);
         }
         .score {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             margin-top: 30px;
+            color: #27ae60;
+            display: none;
+        }
+        .alert {
+            background-color: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+            }
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+            button {
+                width: 100%;
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -65,7 +119,7 @@
             </div>
 
             <div class="question">
-                <h3>5. Вы умеете работать группе</h3>
+                <h3>5. Вы умеете работать в группе?</h3>
                 <button type="button" onclick="recordAnswer('q5', 'yes')">Да</button>
                 <button type="button" onclick="recordAnswer('q5', 'no')">Нет</button>
             </div>
@@ -103,8 +157,12 @@
             <button type="button" onclick="submitSurvey()">Отправить</button>
         </form>
 
-        <div id="scoreDisplay" class="score" style="display: none;">
+        <div id="scoreDisplay" class="score">
             <p>Вы выбрали <span id="score"></span> ответов "Да".</p>
+        </div>
+
+        <div id="errorMessage" class="alert" style="display: none;">
+            Пожалуйста, ответьте на все вопросы.
         </div>
     </div>
 
@@ -117,7 +175,7 @@
 
         function submitSurvey() {
             if (Object.keys(answers).length < 10) {
-                alert("Пожалуйста, ответьте на все вопросы.");
+                document.getElementById("errorMessage").style.display = "block";
                 return;
             }
 
@@ -144,3 +202,4 @@
 
 </body>
 </html>
+
