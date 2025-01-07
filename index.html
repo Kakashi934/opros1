@@ -54,6 +54,12 @@
             transition: background-color 0.3s, transform 0.2s;
             position: relative;
         }
+        button.selected-yes {
+            background-color: #2ecc71;
+        }
+        button.selected-no {
+            background-color: #e74c3c;
+        }
         button:hover {
             background-color: #2980b9;
         }
@@ -120,62 +126,62 @@
         <form id="surveyForm">
             <div class="question">
                 <h3>1. У вас есть опыт работы в команде?</h3>
-                <button type="button" onclick="recordAnswer('q1', 'yes')">Да</button>
-                <button type="button" onclick="recordAnswer('q1', 'no')">Нет</button>
+                <button type="button" onclick="recordAnswer('q1', 'yes', this)">Да</button>
+                <button type="button" onclick="recordAnswer('q1', 'no', this)">Нет</button>
             </div>
 
             <div class="question">
                 <h3>2. Вы готовы играть в ночное время?</h3>
-                <button type="button" onclick="recordAnswer('q2', 'yes')">Да</button>
-                <button type="button" onclick="recordAnswer('q2', 'no')">Нет</button>
+                <button type="button" onclick="recordAnswer('q2', 'yes', this)">Да</button>
+                <button type="button" onclick="recordAnswer('q2', 'no', this)">Нет</button>
             </div>
 
             <div class="question">
                 <h3>3. Вы умеете играть под давлением?</h3>
-                <button type="button" onclick="recordAnswer('q3', 'yes')">Да</button>
-                <button type="button" onclick="recordAnswer('q3', 'no')">Нет</button>
+                <button type="button" onclick="recordAnswer('q3', 'yes', this)">Да</button>
+                <button type="button" onclick="recordAnswer('q3', 'no', this)">Нет</button>
             </div>
 
             <div class="question">
                 <h3>4. У вас есть опыт в игре?</h3>
-                <button type="button" onclick="recordAnswer('q4', 'yes')">Да</button>
-                <button type="button" onclick="recordAnswer('q4', 'no')">Нет</button>
+                <button type="button" onclick="recordAnswer('q4', 'yes', this)">Да</button>
+                <button type="button" onclick="recordAnswer('q4', 'no', this)">Нет</button>
             </div>
 
             <div class="question">
                 <h3>5. Вы умеете работать в группе?</h3>
-                <button type="button" onclick="recordAnswer('q5', 'yes')">Да</button>
-                <button type="button" onclick="recordAnswer('q5', 'no')">Нет</button>
+                <button type="button" onclick="recordAnswer('q5', 'yes', this)">Да</button>
+                <button type="button" onclick="recordAnswer('q5', 'no', this)">Нет</button>
             </div>
 
             <div class="question">
                 <h3>6. Вы готовы изучать новые подачи?</h3>
-                <button type="button" onclick="recordAnswer('q6', 'yes')">Да</button>
-                <button type="button" onclick="recordAnswer('q6', 'no')">Нет</button>
+                <button type="button" onclick="recordAnswer('q6', 'yes', this)">Да</button>
+                <button type="button" onclick="recordAnswer('q6', 'no', this)">Нет</button>
             </div>
 
             <div class="question">
                 <h3>7. Вы хотите играть с нами?</h3>
-                <button type="button" onclick="recordAnswer('q7', 'yes')">Да</button>
-                <button type="button" onclick="recordAnswer('q7', 'no')">Нет</button>
+                <button type="button" onclick="recordAnswer('q7', 'yes', this)">Да</button>
+                <button type="button" onclick="recordAnswer('q7', 'no', this)">Нет</button>
             </div>
 
             <div class="question">
                 <h3>8. У вас есть опыт в игре?</h3>
-                <button type="button" onclick="recordAnswer('q8', 'yes')">Да</button>
-                <button type="button" onclick="recordAnswer('q8', 'no')">Нет</button>
+                <button type="button" onclick="recordAnswer('q8', 'yes', this)">Да</button>
+                <button type="button" onclick="recordAnswer('q8', 'no', this)">Нет</button>
             </div>
 
             <div class="question">
                 <h3>9. Вы можете работать в гибком графике?</h3>
-                <button type="button" onclick="recordAnswer('q9', 'yes')">Да</button>
-                <button type="button" onclick="recordAnswer('q9', 'no')">Нет</button>
+                <button type="button" onclick="recordAnswer('q9', 'yes', this)">Да</button>
+                <button type="button" onclick="recordAnswer('q9', 'no', this)">Нет</button>
             </div>
 
             <div class="question">
                 <h3>10. Вы готовы работать в команде и делиться знаниями?</h3>
-                <button type="button" onclick="recordAnswer('q10', 'yes')">Да</button>
-                <button type="button" onclick="recordAnswer('q10', 'no')">Нет</button>
+                <button type="button" onclick="recordAnswer('q10', 'yes', this)">Да</button>
+                <button type="button" onclick="recordAnswer('q10', 'no', this)">Нет</button>
             </div>
 
             <button type="button" onclick="submitSurvey()">Отправить</button>
@@ -193,11 +199,23 @@
     <script>
         let answers = {};
 
-        function recordAnswer(question, answer) {
+        function recordAnswer(question, answer, button) {
+            // Записываем ответ
             answers[question] = answer;
 
+            // Добавляем стили к выбранной кнопке
+            const buttons = button.parentNode.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.classList.remove('selected-yes', 'selected-no');
+            });
+
+            if (answer === 'yes') {
+                button.classList.add('selected-yes');
+            } else {
+                button.classList.add('selected-no');
+            }
+
             // Создаем и отображаем круг
-            const button = event.target;
             const circle = document.createElement('div');
             circle.classList.add('circle');
             button.appendChild(circle);
@@ -237,5 +255,3 @@
 
 </body>
 </html>
-
-
