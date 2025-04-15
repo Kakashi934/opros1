@@ -1,133 +1,180 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>I Love You</title>
+  <meta charset="UTF-8">
+  <title>Я тебя люблю 💖</title>
   <style>
+    * { box-sizing: border-box; }
     body {
       margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #ffd1ff);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 0;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: 'Segoe UI', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      color: white;
-      overflow: hidden;
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+      height: 100vh;
       text-align: center;
     }
 
-    .glow-text {
-      font-size: 2rem;
-      padding: 20px 40px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-      margin-bottom: 40px;
-      font-weight: bold;
+    h1 {
+      font-size: 3em;
+      margin: 1em 0 0.2em;
+      text-shadow: 2px 2px 4px #00000030;
+      animation: fadeIn 3s ease-in;
     }
 
-    .buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      max-width: 90%;
-      margin-bottom: 30px;
-      z-index: 2;
+    p {
+      font-size: 1.5em;
+      margin: 0 1em 1em;
     }
 
-    .btn {
-      background: #ff6b81;
+    button {
+      padding: 10px 20px;
+      background: #fff;
+      color: #e91e63;
       border: none;
-      padding: 15px 25px;
-      border-radius: 12px;
-      color: white;
-      font-weight: bold;
-      font-size: 1rem;
+      border-radius: 10px;
+      font-size: 1.2em;
       cursor: pointer;
-      transition: background 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: 0.3s;
+      margin: 10px;
     }
 
-    .btn:hover {
-      background: #ff3c52;
+    button:hover {
+      transform: scale(1.05);
     }
 
-    .footer {
+    /* Секретное письмо */
+    .letter {
+      display: none;
+      margin-top: 30px;
+      font-style: italic;
+      font-size: 1.3em;
+      padding: 0 20px;
+      text-align: center;
+      background: rgba(255,255,255,0.2);
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    /* Луна */
+    .moon {
+      position: absolute;
+      top: 10%;
+      left: -10%;
+      width: 150px;
+      height: 150px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/e/e1/Full_Moon_as_seen_from_Earth.jpg') no-repeat center center;
+      background-size: cover;
+      border-radius: 50%;
+      animation: moveMoon 20s infinite linear;
+    }
+
+    @keyframes moveMoon {
+      0% { left: -10%; top: 10%; }
+      25% { left: 20%; top: 5%; }
+      50% { left: 50%; top: 10%; }
+      75% { left: 80%; top: 5%; }
+      100% { left: 100%; top: 10%; }
+    }
+
+    /* Центр для клика */
+    .click-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      color: #ff4081;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Текст внизу страницы */
+    .bottom-text {
       margin-top: auto;
+      font-size: 1.2em;
+      text-align: center;
       padding: 20px;
-      font-size: 1.2rem;
-      color: #eee;
-      z-index: 2;
-    }
-
-    .image-container {
-      margin-top: 50px;
-    }
-
-    .image-container img {
+      color: #fff;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
       width: 100%;
-      max-width: 500px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
     }
 
-    .signature {
-      font-size: 1.2rem;
-      color: #ff6b81;
-      margin-top: 20px;
+    /* Кнопка Telegram */
+    .telegram-button {
+      background: #000;
+      color: #fff;
+      padding: 15px 30px;
+      border-radius: 20px;
+      font-size: 1.2em;
+      text-decoration: none;
+      margin: 10px 0;
+      display: inline-block;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .telegram-button:hover {
+      background: #333;
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
-  <div class="glow-text" id="loveText">
-    Желаю тебе счастья, которое не зависит от обстоятельств, а растет внутри. Пусть твоя жизнь будет наполнена яркими моментами, радостью и счастьем, пусть каждый день будет новым открытием, полным удивительных и ярких событий. Пусть твои мечты сбываются, и пусть ты всегда помнишь, что не существует преграды, которую невозможно преодолеть с любовью в сердце и верой в себя. Пусть твое сердце будет открыто для любви, пусть ты находишь радость в самых простых вещах, и пусть с каждым днем твое счастье становится все более ярким и искренним. Желаю тебе, чтобы ты всегда ощущал поддержку близких, заботу и любовь. Пусть твой путь будет легким, несмотря на любые трудности, и пусть в твоей жизни будет больше улыбок, чем слез. Пусть каждый новый день будет лучше предыдущего, а твои мечты становятся реальностью. Желаю тебе также, чтобы ты не боялся рисковать, искать новые возможности и идти за тем, что тебе действительно важно. Пусть в твоей жизни будут верные друзья, искренние отношения и настоящая любовь, которая делает все ярким и особенным. Пусть твоя жизнь будет долгой, полной событий, теплых встреч, смеха, радости и любви. Я люблю тебя!
+
+  <!-- Луна -->
+  <div class="moon"></div>
+
+  <h1>Я тебя люблю 💖</h1>
+  <p>Ты моё всё. Просто нажми на центр... 🥰</p>
+
+  <!-- Кнопка WhatsApp -->
+  <button onclick="window.location.href = 'https://wa.me/7056537178?text=Я%20тебя%20люблю!%20💖';">Написать мне в WhatsApp</button>
+
+  <!-- Сердечко с переходом на другой сайт -->
+  <a href="https://example.com" target="_blank">
+    <div class="heart">❤️</div>
+  </a>
+
+  <!-- Кнопка секретного письма -->
+  <button onclick="document.querySelector('.letter').style.display = 'block'">Секретное письмо 💌</button>
+
+  <!-- Секретное письмо текст -->
+  <div class="letter">
+    Дорогая(ой), я хочу, чтобы ты всегда улыбалась(ся).
+    Пусть каждый день будет наполнен счастьем и теплом — с тобой весь мир ярче ✨
+    Я всегда рядом. Навсегда.
+    ЛЮБЛЮ ТЕБЯ, ИЗВИНИ ЗА ВСЕ МОИ КОСЯКИ И ИЗВИНИ МЕНЯ, КОГДА ТЕБЕ СДЕЛАЛ БОЛЬНО.
+    ЛЮБЛЮ ТЕБЯЯЯЯЯЯЯЯЯЯ СИЛЬНО! 💖
   </div>
 
-  <div class="buttons">
-    <button class="btn" onclick="setText('ru')">🇷🇺 Русский</button>
-    <button class="btn" onclick="setText('en')">🇬🇧 English</button>
-    <button class="btn" onclick="setText('es')">🇪🇸 Español</button>
-    <button class="btn" onclick="setText('fr')">🇫🇷 Français</button>
-    <button class="btn" onclick="setText('de')">🇩🇪 Deutsch</button>
-    <button class="btn" onclick="setText('it')">🇮🇹 Italiano</button>
-    <button class="btn" onclick="setText('zh')">🇨🇳 中文</button>
-    <button class="btn" onclick="setText('ja')">🇯🇵 日本語</button>
-    <button class="btn" onclick="setText('ar')">🇸🇦 العربية</button>
-    <button class="btn" onclick="setText('ko')">🇰🇷 한국어</button>
+  <!-- Центр клика -->
+  <div class="click-center" onclick="window.location.href = 'https://gifft.me/ru/o/l/n8fd7400b8tz3yye9g3gneb4';">
+    💖
   </div>
 
-  <div class="footer">
-    Этот сайт сделан с любовью 💖
+  <!-- Кнопка Telegram -->
+  <a href="https://t.me/S8NM00N" class="telegram-button" target="_blank">Написать в Telegram</a>
+
+  <!-- Текст внизу страницы -->
+  <div class="bottom-text">
+    Нам не мешает расстояние. Удачи на конюшне!
+    Если ты видишь этот сайт, то я уже сплю... ХАХААХА!
+    ЛЮБЛЮ ТЕБЯ! 💖
   </div>
 
-  <div class="image-container">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Heart_symbol_1.svg/1200px-Heart_symbol_1.svg.png" alt="Heart Image">
-  </div>
-
-  <div class="signature">
-    С любовью, Аслан
-  </div>
-
-  <script>
-    const loveMessages = {
-      ru: "Желаю тебе счастья, которое не зависит от обстоятельств, а растет внутри. Пусть твоя жизнь будет наполнена яркими моментами, радостью и счастьем, пусть каждый день будет новым открытием, полным удивительных и ярких событий. Пусть твои мечты сбываются, и пусть ты всегда помнишь, что не существует преграды, которую невозможно преодолеть с любовью в сердце и верой в себя. Пусть твое сердце будет открыто для любви, пусть ты находишь радость в самых простых вещах, и пусть с каждым днем твое счастье становится все более ярким и искренним. Желаю тебе, чтобы ты всегда ощущал поддержку близких, заботу и любовь. Пусть твой путь будет легким, несмотря на любые трудности, и пусть в твоей жизни будет больше улыбок, чем слез. Пусть каждый новый день будет лучше предыдущего, а твои мечты становятся реальностью. Желаю тебе также, чтобы ты не боялся рисковать, искать новые возможности и идти за тем, что тебе действительно важно. Пусть в твоей жизни будут верные друзья, искренние отношения и настоящая любовь, которая делает все ярким и особенным. Пусть твоя жизнь будет долгой, полной событий, теплых встреч, смеха, радости и любви. Я люблю тебя!",
-      en: "I wish you happiness that doesn't depend on circumstances, but grows from within. May your life be filled with bright moments, joy, and happiness. May every day be a new discovery, full of amazing and bright events. May your dreams come true, and may you always remember that there is no obstacle you cannot overcome with love in your heart and faith in yourself. May your heart be open to love, may you find joy in the simplest things, and may your happiness become brighter and more sincere with each day. I wish you always feel the support of loved ones, care, and love. May your path be easy, despite any difficulties, and may your life be filled with more smiles than tears. May every new day be better than the previous one, and may your dreams become reality. I also wish that you do not fear taking risks, seeking new opportunities, and going after what truly matters to you. May your life be full of true friends, sincere relationships, and real love that makes everything bright and special. May your life be long, full of events, warm meetings, laughter, joy, and love. I love you!",
-      es: "Te deseo felicidad que no dependa de las circunstancias, sino que crezca desde adentro. Que tu vida esté llena de momentos brillantes, alegría y felicidad. Que cada día sea un nuevo descubrimiento, lleno de eventos sorprendentes y brillantes. Que tus sueños se hagan realidad y siempre recuerdes que no hay obstáculo que no puedas superar con amor en tu corazón y fe en ti mismo. Que tu corazón esté abierto al amor, que encuentres alegría en las cosas más simples, y que tu felicidad se haga más brillante y sincera con cada día. Te deseo que siempre sientas el apoyo de tus seres queridos, su cuidado y amor. Que tu camino sea fácil, a pesar de cualquier dificultad, y que tu vida esté llena de más sonrisas que lágrimas. Que cada nuevo día sea mejor que el anterior y que tus sueños se hagan realidad. También te deseo que no tengas miedo de arriesgar, buscar nuevas oportunidades y hacer lo que realmente importa. Que tu vida esté llena de amigos verdaderos, relaciones sinceras y amor real que haga todo más brillante y especial. Que tu vida sea larga, llena de eventos, reuniones cálidas, risas, alegría y amor. ¡Te amo!",
-      fr: "Je te souhaite du bonheur qui ne dépend pas des circonstances, mais qui grandit de l'intérieur. Que ta vie soit remplie de moments lumineux, de joie et de bonheur. Que chaque jour soit une nouvelle découverte, pleine d'événements étonnants et lumineux. Que tes rêves se réalisent et que tu te souviennes toujours qu'il n'y a aucun obstacle que tu ne puisses surmonter avec de l'amour dans ton cœur et de la foi en toi-même. Que ton cœur soit ouvert à l'amour, que tu trouves de la joie dans les choses les plus simples, et que ton bonheur devienne de plus en plus lumineux et sincère chaque jour. Je te souhaite de toujours ressentir le soutien des proches, les soins et l'amour. Que ton chemin soit facile, malgré les difficultés, et que ta vie soit remplie de plus de sourires que de larmes. Que chaque nouveau jour soit meilleur que le précédent et que tes rêves deviennent réalité. Je te souhaite aussi de ne pas avoir peur de prendre des risques, de chercher de nouvelles opportunités et de poursuivre ce qui compte vraiment pour toi. Que ta vie soit pleine de vrais amis, de relations sincères et d'un amour véritable qui rend tout brillant et spécial. Que ta vie soit longue, pleine d'événements, de rencontres chaleureuses, de rires, de joie et d'amour. Je t'aime!",
-      de: "Ich wünsche dir Glück, das nicht von Umständen abhängt, sondern von innen wächst. Möge dein Leben mit hellen Momenten, Freude und Glück erfüllt sein. Möge jeder Tag eine neue Entdeckung sein, voller erstaunlicher und heller Ereignisse. Mögen deine Träume wahr werden und möge du immer daran denken, dass es kein Hindernis gibt, das du nicht mit Liebe im Herzen und Glauben an dich selbst überwinden kannst. Möge dein Herz für die Liebe offen sein, mögest du Freude an den einfachsten Dingen finden und möge dein Glück mit jedem Tag heller und aufrichtiger werden. Ich wünsche dir, dass du immer die Unterstützung von geliebten Menschen, Fürsorge und Liebe spürst. Möge dein Weg einfach sein, trotz aller Schwierigkeiten, und möge dein Leben voller Lächeln und weniger Tränen sein. Möge jeder neue Tag besser sein als der vorherige und mögen deine Träume wahr werden. Ich wünsche dir auch, dass du keine Angst hast, Risiken einzugehen, neue Möglichkeiten zu suchen und das zu verfolgen, was dir wirklich wichtig ist. Möge dein Leben von echten Freunden, aufrichtigen Beziehungen und wahrer Liebe erfüllt sein, die alles hell und besonders macht. Möge dein Leben lang sein, voller Ereignisse, warmer Begegnungen, Lachen, Freude und Liebe. Ich liebe dich!",
-      it: "Ti auguro felicità che non dipende dalle circostanze, ma cresce dall'interno. Che la tua vita sia piena di momenti luminosi, gioia e felicità. Che ogni giorno sia una nuova scoperta, piena di eventi straordinari e luminosi. Che i tuoi sogni si avverino e che tu ricordi sempre che non esiste un ostacolo che tu non possa superare con amore nel cuore e fiducia in te stesso. Che il tuo cuore sia aperto all'amore, che tu trovi gioia nelle cose più semplici e che la tua felicità diventi sempre più brillante e sincera ogni giorno. Ti auguro di sentire sempre il sostegno dei tuoi cari, la cura e l'amore. Che il tuo cammino sia facile, nonostante le difficoltà, e che la tua vita sia piena di più sorrisi che lacrime. Che ogni nuovo giorno sia migliore del precedente e che i tuoi sogni diventino realtà. Ti auguro anche di non avere paura di rischiare, cercare nuove opportunità e seguire ciò che è davvero importante per te. Che la tua vita sia piena di veri amici, relazioni sincere e amore vero che rende tutto luminoso e speciale. Che la tua vita sia lunga, piena di eventi, incontri calorosi, risate, gioia e amore. Ti amo!",
-      zh: "我祝愿你拥有不依赖于外部环境的幸福，而是从内心生长。愿你的生活充满美好的时刻、喜悦和幸福。愿每一天都是一次新的发现，充满了惊人的亮点。愿你的梦想成真，愿你永远记住，没有任何障碍是你无法通过心中的爱和自信克服的。愿你的心向爱敞开，愿你在最简单的事情中找到快乐，愿你的幸福随着每一天的到来变得更加明亮和真诚。我希望你始终感受到亲人的支持、关爱和爱。愿你的道路尽管有困难，但依然轻松，愿你的生活中有更多的笑容，少一些眼泪。愿每一天都比前一天更好，愿你的梦想变为现实。我还希望你不畏风险，去寻找新的机会，去追求真正对你重要的东西。愿你的生活充满真挚的朋友、真诚的关系和让一切变得光彩照人的真正的爱。愿你的生活长久，充满事件、温暖的会面、笑声、快乐和爱。我爱你！",
-      ja: "私は、あなたが状況に依存せず、内面から成長する幸福を願っています。あなたの人生が輝く瞬間、喜び、幸せで満ちていることを願っています。毎日が新しい発見であり、素晴らしい出来事で満ちていることを願っています。あなたの夢が叶い、愛を心に抱き、自己信頼を持って障害を克服できることを忘れないでください。あなたの心が愛に開かれており、最も簡単なことで喜びを見つけ、毎日あなたの幸せがより明るく、誠実に変わっていくことを願っています。あなたがいつも親しい人たちからのサポート、思いやり、愛を感じられるように願っています。あなたの道がどんな困難があっても簡単であり、あなたの人生が涙よりも笑顔で満たされることを願っています。毎日が前の日よりも良くなり、あなたの夢が現実のものとなりますように。そして、リスクを恐れず、新しいチャンスを追い求め、あなたにとって本当に重要なものを追いかけることを願っています。あなたの人生が真の友人、誠実な関係、そしてすべてを明るく特別にする本物の愛で満たされますように。あなたの人生が長く、出来事、温かい出会い、笑い、喜び、愛で満ちていることを願っています。愛しています！",
-      ar: "أتمنى لك السعادة التي لا تعتمد على الظروف، بل تنمو من الداخل. أتمنى أن تكون حياتك مليئة باللحظات المضيئة، والفرح، والسعادة. ليكن كل يوم اكتشافًا جديدًا، مليئًا بالأحداث المدهشة والمضيئة. أتمنى أن تتحقق أحلامك، وأن تتذكر دائمًا أنه لا يوجد عقبة لا يمكنك تجاوزها بالحب في قلبك والإيمان بنفسك. ليكن قلبك مفتوحًا للحب، وأن تجد السعادة في أبسط الأشياء، وأن يصبح سعادتك أكثر إشراقًا وصدقًا مع كل يوم. أتمنى أن تشعر دائمًا بدعم أحبائك، ورعايتهم وحبهم. ليكن طريقك سهلًا رغم أي صعوبات، ولتكن حياتك مليئة بالمزيد من الابتسامات بدلًا من الدموع. أتمنى أن يكون كل يوم أفضل من الذي قبله، وأن تتحقق أحلامك. كما أتمنى أن لا تخاف من المخاطرة، البحث عن الفرص الجديدة، وملاحقة ما هو مهم حقًا بالنسبة لك. لتكن حياتك مليئة بالأصدقاء الحقيقيين، والعلاقات الصادقة، والحب الحقيقي الذي يجعل كل شيء مشرقًا ومميزًا. ليكن حياتك طويلة، مليئة بالأحداث، واللقاءات الدافئة، والضحك، والفرح، والحب. أحبك!",
-      ko: "나는 당신이 상황에 의존하지 않고 내면에서 자라는 행복을 기원합니다. 당신의 삶이 밝은 순간들, 기쁨과 행복으로 가득 차기를 바랍니다. 매일이 새로운 발견이 되기를, 놀랍고 밝은 사건들로 가득 차기를 바랍니다. 당신의 꿈이 이루어지고, 당신이 사랑을 마음속에 가지고 자신을 믿으며 어떤 장애물도 극복할 수 있다는 것을 항상 기억하시길 바랍니다. 당신의 마음이 사랑에 열려 있고, 가장 단순한 것들에서 기쁨을 찾고, 당신의 행복이 매일 더욱 밝고 진실해지기를 바랍니다. 항상 가까운 사람들의 지원과 보살핌, 사랑을 느낄 수 있기를 바랍니다. 당신의 길이 어떠한 어려움에도 불구하고 쉽기를, 당신의 삶이 눈물보다는 웃음으로 가득 차기를 바랍니다. 매일이 어제보다 더 나은 하루가 되고, 당신의 꿈이 현실이 되기를 바랍니다. 또한 위험을 두려워하지 않고 새로운 기회를 찾고 정말 중요한 것을 추구할 수 있기를 바랍니다. 당신의 삶이 진정한 친구들, 진실된 관계, 그리고 모든 것을 밝고 특별하게 만드는 진정한 사랑으로 가득 차기를 바랍니다. 당신의 삶이 길고, 사건들, 따뜻한 만남, 웃음, 기쁨, 사랑으로 가득 차기를 기원합니다. 사랑합니다!"
-    };
-
-    function setText(language) {
-      document.getElementById("loveText").textContent = loveMessages[language];
-    }
-  </script>
 </body>
 </html>
