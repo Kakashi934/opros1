@@ -55,6 +55,18 @@
       display: none;
       font-weight: bold;
     }
+    #gameCanvas {
+      margin-top: 40px;
+      background: #222;
+      border: 2px solid #ff00cc;
+      display: none;
+    }
+    .startMessage {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-top: 30px;
+      font-weight: bold;
+    }
     @keyframes glow {
       from {
         text-shadow: 0 0 5px #fff, 0 0 10px #ff00cc;
@@ -77,17 +89,171 @@
     Пусть у тебя всегда будет победа, скорость и хорошее настроение!
   </p>
   <div class="heart">❤️</div>
-  
-  <button onclick="showMessage()">Нажми меня</button>
-  
+
+  <button onclick="startGame()">Старт</button>
+
+  <div class="startMessage" id="startMessage">
+    Я тебя люблю! Играйте на здоровье! Хаха! 🎮💖
+  </div>
+
   <div class="message" id="message">
-    Ты супер, Саша! 💖<br> 
+    Ты супер, Саша! 💖<br>
     Пусть все твои игры будут успешными, а жизнь полна ярких моментов! 🌟
   </div>
-  
+
+  <canvas id="gameCanvas"></canvas>
+
   <script>
+    function startGame() {
+      // Скрываем стартовую кнопку и сообщение
+      document.querySelector('button').style.display = 'none';
+      document.getElementById('startMessage').style.display = 'block';
+
+      // Появляется игровой канвас
+      document.getElementById('gameCanvas').style.display = 'block';
+
+      // Запуск игры
+      initGame();
+    }
+
     function showMessage() {
       document.getElementById('message').style.display = 'block';
+    }
+
+    // Игра "Поймай мяч"
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Поддержка для Android (рендер под разные размеры экрана)
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight / 2;
+
+    let ballRadius = 10;
+    let x = canvas.width / 2;
+    let y = canvas.height - 30;
+    let dx = 4;
+    let dy = -4;
+
+    // Увеличиваем платформу
+    let paddleHeight = 10;
+    let paddleWidth = canvas.width / 4; // Платформа теперь будет занимать 1/4 ширины экрана
+    let paddleX = (canvas.width - paddleWidth) / 2;
+
+    let rightPressed = false;
+    let leftPressed = false;
+
+    const paddleSpeed = 7;
+
+    let score = 0;
+
+    // Обработчики для клавиш (на десктопе)
+    document.addEventListener('keydown', keyDownHandler, false);
+    document.addEventListener('keyup', keyUpHandler, false);
+
+    // Обработчики для сенсорного экрана (на Android)
+    let touchStartX = 0;
+    document.addEventListener('touchstart', touchStartHandler, false);
+    document.addEventListener('touchmove', touchMoveHandler, false);
+
+    function keyDownHandler(e) {
+      if (e.key == "Right" || e.key == "ArrowRight") {
+        rightPressed = true;
+      }
+      else if (e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = true;
+      }
+    }
+
+    function keyUpHandler(e) {
+      if (e.key == "Right" || e.key == "ArrowRight") {
+        rightPressed = false;
+      }
+      else if (e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = false;
+      }
+    }
+
+    // Сенсорное управление (Android)
+    function touchStartHandler(e) {
+      touchStartX = e.touches[0].clientX;
+    }
+
+    function touchMoveHandler(e) {
+      let touchMoveX = e.touches[0].clientX;
+      let deltaX = touchMoveX - touchStartX;
+      touchStartX = touchMoveX;
+
+      paddleX += deltaX;
+
+      // Ограничиваем движение платформы по краям экрана
+      if (paddleX < 0) paddleX = 0;
+      if (paddleX + paddleWidth > canvas.width) paddleX = canvas.width - paddleWidth;
+    }
+
+    function drawBall() {
+      ctx.beginPath();
+      ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+      ctx.fillStyle = "#ff00cc";
+      ctx.fill();
+      ctx.closePath();
+    }
+
+    function drawPaddle() {
+      ctx.beginPath();
+      ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+      ctx.fillStyle = "#ff00cc";
+      ctx.fill();
+      ctx.closePath();
+    }
+
+    function drawScore() {
+      document.getElementById('score').textContent = "Очки: " + score;
+    }
+
+    function collisionDetection() {
+      if (x > paddleX && x < paddleX + paddleWidth && y + ballRadius > canvas.height - paddleHeight) {
+        dy = -dy;
+        score++; // Увеличиваем счёт на 1
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawBall();
+      drawPaddle();
+      collisionDetection();
+      drawScore(); // Отображаем счёт
+
+      if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+        dx = -dx;
+      }
+      if (y + dy < ballRadius) {
+        dy = -dy;
+      } else if (y + dy > canvas.height - ballRadius) {
+        if (x > paddleX && x < paddleX + paddleWidth) {
+          dy = -dy;
+        } else {
+          alert("Игра окончена! Ваш счёт: " + score);
+          document.location.reload(); // Перезагружаем страницу
+        }
+      }
+
+      // Управление на компьютере
+      if (rightPressed && paddleX < canvas.width - paddleWidth) {
+        paddleX += paddleSpeed;
+      }
+      else if (leftPressed && paddleX > 0) {
+        paddleX -= paddleSpeed;
+      }
+
+      x += dx;
+      y += dy;
+      requestAnimationFrame(draw);
+    }
+
+    function initGame() {
+      // Инициализация игры
+      draw();
     }
   </script>
 </body>
