@@ -1,175 +1,25 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Ты лучшая подруга 💫</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #a18cd1, #fbc2eb);
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #fff;
-      overflow-x: hidden;
-      position: relative;
-      height: 100vh;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 3em;
-      margin: 1em 0 0.2em;
-      text-shadow: 2px 2px 4px #00000030;
-      animation: fadeIn 3s ease-in;
-    }
-
-    p {
-      font-size: 1.5em;
-      margin: 0 1em 1em;
-    }
-
-    button {
-      padding: 10px 20px;
-      background: #fff;
-      color: #8e24aa;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.2em;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      transition: 0.3s;
-      margin: 10px;
-    }
-
-    button:hover {
-      transform: scale(1.05);
-    }
-
-    .letter {
-      display: none;
-      margin-top: 30px;
-      font-style: italic;
-      font-size: 1.3em;
-      padding: 0 20px;
-      text-align: center;
-      background: rgba(255,255,255,0.2);
-      border-radius: 15px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    }
-
-    .moon {
-      position: absolute;
-      top: 10%;
-      left: -10%;
-      width: 150px;
-      height: 150px;
-      background: url('https://upload.wikimedia.org/wikipedia/commons/e/e1/Full_Moon_as_seen_from_Earth.jpg') no-repeat center center;
-      background-size: cover;
-      border-radius: 50%;
-      animation: moveMoon 20s infinite linear;
-    }
-
-    @keyframes moveMoon {
-      0% { left: -10%; top: 10%; }
-      25% { left: 20%; top: 5%; }
-      50% { left: 50%; top: 10%; }
-      75% { left: 80%; top: 5%; }
-      100% { left: 100%; top: 10%; }
-    }
-
-    .click-center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100px;
-      height: 100px;
-      background-color: rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2em;
-      color: #d500f9;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .bottom-text {
-      margin-top: auto;
-      font-size: 1.2em;
-      text-align: center;
-      padding: 20px;
-      color: #fff;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 10px;
-      width: 100%;
-    }
-
-    .telegram-button {
-      background: #000;
-      color: #fff;
-      padding: 15px 30px;
-      border-radius: 20px;
-      font-size: 1.2em;
-      text-decoration: none;
-      margin: 10px 0;
-      display: inline-block;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-
-    .telegram-button:hover {
-      background: #333;
-      transform: scale(1.05);
-    }
-
-    .heart {
-      font-size: 2em;
-      margin: 20px;
-      transition: transform 0.3s ease;
-    }
-
-    .heart:hover {
-      transform: scale(1.2);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Султан чорт</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+            font-size: 48px;
+        }
+    </style>
 </head>
 <body>
-
-  <div class="moon"></div>
-
-  <h1>Ты лучшая подруга 💫</h1>
-  <p>Ты как солнечный лучик, который освещает мой день. Нажми на звездочку! 😊</p>
-
-  <button onclick="window.location.href = 'https://wa.me/7056537178?text=Ты%20моя%20лучшая%20подруга!%20💫';">Написать мне в WhatsApp</button>
-
-  <a href="https://example.com" target="_blank">
-    <div class="heart">🌈</div>
-  </a>
-
-  <button onclick="document.querySelector('.letter').style.display = 'block'">Секретное письмо 💌</button>
-
-  <div class="letter">
-    Подружка, спасибо тебе за всё. За поддержку, за смех, за искренность. 💖
-    Ты невероятная, и я горжусь, что ты — часть моей жизни.
-    Ты делаешь мир ярче, и я всегда рядом, когда нужно!
-    Просто знай — ты ОГОНЬ! 🔥
-  </div>
-
-  <div class="click-center" onclick="window.location.href = 'https://gifft.me/ru/o/b/2x78e2m0ieer4a9v1exmbe3i';">
-    🌟
-  </div>
-
-  <a href="https://t.me/S8NM00N" class="telegram-button" target="_blank">Написать в Telegram</a>
-
-  <div class="bottom-text">
-    Настоящая дружба на расстоянии — это магия.
-    Спасибо, что ты есть. Не забывай, ты потрясающая! 💜
-  </div>
-
+    <h1>Султан чорт</h1>
 </body>
 </html>
