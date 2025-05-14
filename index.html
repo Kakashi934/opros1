@@ -1,1 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>НЕ СПАТЬ!</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(135deg, #000000, #1a1a1a);
+      color: #00ffcc;
+      text-align: center;
+      padding: 40px;
+      animation: glow 3s infinite alternate;
+    }
+
+    h1 {
+      font-size: 4em;
+      margin-bottom: 0.2em;
+      color: #ff0066;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 2em;
+      color: #ffcc00;
+    }
+
+    .clock {
+      font-size: 2em;
+      color: #00ffff;
+    }
+
+    .countdown {
+      font-size: 1.5em;
+      margin: 20px 0;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #ff00cc, 0 0 20px #ff00cc;
+      }
+      to {
+        text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff;
+      }
+    }
+
+    .note {
+      margin-top: 30px;
+      font-style: italic;
+      font-size: 1.2em;
+    }
+
+    .chat-container {
+      margin-top: 50px;
+      background: #111;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      color: white;
+    }
+
+    #chat-box {
+      height: 200px;
+      overflow-y: auto;
+      background: #222;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 0.9em;
+      text-align: left;
+    }
+
+    input, button {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      margin: 5px;
+    }
+
+    input {
+      width: 35%;
+    }
+
+    #msg {
+      width: 45%;
+    }
+
+    button {
+      background-color: #00ffcc;
+      color: black;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #00ccaa;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>НЕ СПАТЬ!</h1>
+  <h2>Завтра урок 😈</h2>
+
+  <div class="clock" id="clock">00:00:00</div>
+
+  <div class="countdown" id="countdown">До каникул: ...</div>
+
+  <div class="note">🧠 Придумай отмазку на утро... пока не поздно!</div>
+
+  <div class="chat-container">
+    <h2>💬 Чат "НЕ СПЯЩИХ"</h2>
+    <div id="chat-box"></div>
+    <input type="text" id="name" placeholder="Твоё имя">
+    <input type="text" id="msg" placeholder="Сообщение">
+    <button onclick="sendMessage()">Отправить</button>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('ru-RU');
+      document.getElementById("clock").textContent = timeStr;
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const summerBreak = new Date(now.getFullYear(), 5, 1); // 1 июня
+      const diff = summerBreak - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown").textContent = "КАНИКУЛЫ УЖЕ НАЧАЛИСЬ! 🎉";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("countdown").textContent =
+        `До каникул: ${days}д ${hours}ч ${minutes}м ${seconds}с`;
+    }
+
+    // Чат
+    function sendMessage() {
+      const name = document.getElementById("name").value.trim();
+      const msg = document.getElementById("msg").value.trim();
+      if (!name || !msg) return;
+
+      const chat = JSON.parse(localStorage.getItem("chat") || "[]");
+      chat.push({ name, msg });
+      localStorage.setItem("chat", JSON.stringify(chat));
+      document.getElementById("msg").value = "";
+      loadChat();
+    }
+
+    function loadChat() {
+      const chat = JSON.parse(localStorage.getItem("chat") || "[]");
+      const chatBox = document.getElementById("chat-box");
+      chatBox.innerHTML = "";
+      chat.forEach(entry => {
+        const p = document.createElement("p");
+        p.innerHTML = `<strong>${entry.name}:</strong> ${entry.msg}`;
+        chatBox.appendChild(p);
+      });
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    setInterval(updateClock, 1000);
+    setInterval(updateCountdown, 1000);
+    updateClock();
+    updateCountdown();
+    loadChat();
+  </script>
+
+</body>
+</html>
 
