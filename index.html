@@ -118,13 +118,65 @@
     <button onclick="sendMessage()">Отправить</button>
   </div>
 
-  <script>
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyCfQfYLwd0ugxb7AmAJwGUeLAIbgSLa3hI",
+      authDomain: "sait-7a74c.firebaseapp.com",
+      projectId: "sait-7a74c",
+      storageBucket: "sait-7a74c.firebasestorage.app",
+      messagingSenderId: "315452417964",
+      appId: "1:315452417964:web:f39f926f5c1b755b2bfc09",
+      measurementId: "G-ZQYC75KYVX"
+    };
+
+    // Инициализация Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const messagesRef = collection(db, "messages");
+
+    // Функция отправки сообщения
+    async function sendMessage() {
+      const name = document.getElementById("name").value.trim();
+      const msg = document.getElementById("msg").value.trim();
+      if (!name || !msg) return;
+
+      await addDoc(messagesRef, {
+        name,
+        msg,
+        timestamp: serverTimestamp()
+      });
+
+      document.getElementById("msg").value = "";
+    }
+
+    // Загружаем чат
+    const q = query(messagesRef, orderBy("timestamp"));
+    onSnapshot(q, (snapshot) => {
+      const chatBox = document.getElementById("chat-box");
+      chatBox.innerHTML = "";
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        const p = document.createElement("p");
+        p.innerHTML = `<strong>${data.name}:</strong> ${data.msg}`;
+        chatBox.appendChild(p);
+      });
+      chatBox.scrollTop = chatBox.scrollHeight;
+    });
+
+    // Обновление времени
     function updateClock() {
       const now = new Date();
       const timeStr = now.toLocaleTimeString('ru-RU');
       document.getElementById("clock").textContent = timeStr;
     }
 
+    // Обновление отсчёта до каникул
     function updateCountdown() {
       const now = new Date();
       const summerBreak = new Date(now.getFullYear(), 5, 1); // 1 июня
@@ -144,38 +196,11 @@
         `До каникул: ${days}д ${hours}ч ${minutes}м ${seconds}с`;
     }
 
-    // Чат
-    function sendMessage() {
-      const name = document.getElementById("name").value.trim();
-      const msg = document.getElementById("msg").value.trim();
-      if (!name || !msg) return;
-
-      const chat = JSON.parse(localStorage.getItem("chat") || "[]");
-      chat.push({ name, msg });
-      localStorage.setItem("chat", JSON.stringify(chat));
-      document.getElementById("msg").value = "";
-      loadChat();
-    }
-
-    function loadChat() {
-      const chat = JSON.parse(localStorage.getItem("chat") || "[]");
-      const chatBox = document.getElementById("chat-box");
-      chatBox.innerHTML = "";
-      chat.forEach(entry => {
-        const p = document.createElement("p");
-        p.innerHTML = `<strong>${entry.name}:</strong> ${entry.msg}`;
-        chatBox.appendChild(p);
-      });
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }
-
     setInterval(updateClock, 1000);
     setInterval(updateCountdown, 1000);
     updateClock();
     updateCountdown();
-    loadChat();
   </script>
 
 </body>
 </html>
-
