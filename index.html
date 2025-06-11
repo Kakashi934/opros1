@@ -2,204 +2,137 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>НЕ СПАТЬ!</title>
+  <title>Наденешь ли ты браслет?</title>
   <style>
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+
     body {
-      margin: 0;
       font-family: 'Comic Sans MS', cursive, sans-serif;
-      background: linear-gradient(135deg, #000000, #1a1a1a);
-      color: #00ffcc;
-      text-align: center;
-      padding: 40px;
-      animation: glow 3s infinite alternate;
+      background-color: #ffeef8;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
     }
 
     h1 {
-      font-size: 4em;
-      margin-bottom: 0.2em;
-      color: #ff0066;
-    }
-
-    h2 {
-      margin-top: 0;
-      font-size: 2em;
-      color: #ffcc00;
-    }
-
-    .clock {
-      font-size: 2em;
-      color: #00ffff;
-    }
-
-    .countdown {
-      font-size: 1.5em;
-      margin: 20px 0;
-    }
-
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 10px #ff00cc, 0 0 20px #ff00cc;
-      }
-      to {
-        text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff;
-      }
-    }
-
-    .note {
-      margin-top: 30px;
-      font-style: italic;
-      font-size: 1.2em;
-    }
-
-    .chat-container {
-      margin-top: 50px;
-      background: #111;
-      border-radius: 12px;
-      padding: 20px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      color: white;
-    }
-
-    #chat-box {
-      height: 200px;
-      overflow-y: auto;
-      background: #222;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      font-size: 0.9em;
-      text-align: left;
-    }
-
-    input, button {
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      margin: 5px;
-    }
-
-    input {
-      width: 35%;
-    }
-
-    #msg {
-      width: 45%;
+      color: #ff69b4;
+      font-size: 2.5em;
+      text-shadow: 1px 1px 3px #ffc0cb;
+      margin-bottom: 40px;
     }
 
     button {
-      background-color: #00ffcc;
-      color: black;
+      padding: 15px 35px;
+      margin: 10px;
+      font-size: 20px;
+      border: none;
+      border-radius: 25px;
       cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      animation: pulse 1.5s infinite alternate;
     }
 
-    button:hover {
-      background-color: #00ccaa;
+    #yes {
+      background-color: #ffb6c1;
+      color: white;
+    }
+
+    #no {
+      background-color: #f08080;
+      color: white;
+    }
+
+    .heart {
+      position: absolute;
+      top: -50px;
+      font-size: 24px;
+      color: #ff69b4;
+      animation: fall linear infinite;
+      opacity: 0.8;
+    }
+
+    #cat {
+      width: 120px;
+      margin-top: 30px;
+      animation: pulse 2s infinite alternate;
+    }
+
+    #message {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #d63384;
+      display: none;
+      animation: pulse 1s infinite alternate;
     }
   </style>
 </head>
 <body>
 
-  <h1>НЕ СПАТЬ!</h1>
-  <h2>Завтра урок 😈</h2>
+  <h1>💖 Наденешь ли ты браслет просто так? 💖</h1>
 
-  <div class="clock" id="clock">00:00:00</div>
+  <button id="yes">Да 😊</button>
+  <button id="no">Нет 😔</button>
 
-  <div class="countdown" id="countdown">До каникул: ...</div>
+  <div id="message">🎉 Спасибо! Мне очень приятно! 🥰</div>
 
-  <div class="note">🧠 Придумай отмазку на утро... пока не поздно!</div>
+  <img id="cat" src="https://i.imgur.com/6RLHx5K.png" alt="милый котик">
 
-  <div class="chat-container">
-    <h2>💬 Чат "НЕ СПЯЩИХ"</h2>
-    <div id="chat-box"></div>
-    <input type="text" id="name" placeholder="Твоё имя">
-    <input type="text" id="msg" placeholder="Сообщение">
-    <button onclick="sendMessage()">Отправить</button>
-  </div>
+  <!-- Скрытые сердечки -->
+  <script>
+    const phone = "77056537178"; // ← Убедись, что это твой реальный номер
 
-  <!-- Firebase SDK -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    const yesBtn = document.getElementById("yes");
+    const noBtn = document.getElementById("no");
+    const msg = document.getElementById("message");
 
-    // Firebase config
-    const firebaseConfig = {
-      apiKey: "AIzaSyCfQfYLwd0ugxb7AmAJwGUeLAIbgSLa3hI",
-      authDomain: "sait-7a74c.firebaseapp.com",
-      projectId: "sait-7a74c",
-      storageBucket: "sait-7a74c.firebasestorage.app",
-      messagingSenderId: "315452417964",
-      appId: "1:315452417964:web:f39f926f5c1b755b2bfc09",
-      measurementId: "G-ZQYC75KYVX"
+    // Милая анимация при "Да"
+    yesBtn.onclick = () => {
+      const url = `https://wa.me/${phone}?text=Да 💖`;
+      window.open(url, "_blank");
+      msg.style.display = "block";
+      playSound();
     };
 
-    // Инициализация Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    // При "Нет"
+    noBtn.onclick = () => {
+      const url = `https://wa.me/${phone}?text=Нет 😢`;
+      window.open(url, "_blank");
+      playSound();
+    };
 
-    const messagesRef = collection(db, "messages");
-
-    // Функция отправки сообщения
-    async function sendMessage() {
-      const name = document.getElementById("name").value.trim();
-      const msg = document.getElementById("msg").value.trim();
-      if (!name || !msg) return;
-
-      await addDoc(messagesRef, {
-        name,
-        msg,
-        timestamp: serverTimestamp()
-      });
-
-      document.getElementById("msg").value = "";
+    // Звук при клике
+    function playSound() {
+      const audio = new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_05e1d7bce3.mp3");
+      audio.play();
     }
 
-    // Загружаем чат
-    const q = query(messagesRef, orderBy("timestamp"));
-    onSnapshot(q, (snapshot) => {
-      const chatBox = document.getElementById("chat-box");
-      chatBox.innerHTML = "";
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        const p = document.createElement("p");
-        p.innerHTML = `<strong>${data.name}:</strong> ${data.msg}`;
-        chatBox.appendChild(p);
-      });
-      chatBox.scrollTop = chatBox.scrollHeight;
-    });
-
-    // Обновление времени
-    function updateClock() {
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString('ru-RU');
-      document.getElementById("clock").textContent = timeStr;
+    // Сердечки падают
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (2 + Math.random() * 3) + "s";
+      heart.innerText = "💖";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
     }
 
-    // Обновление отсчёта до каникул
-    function updateCountdown() {
-      const now = new Date();
-      const summerBreak = new Date(now.getFullYear(), 5, 1); // 1 июня
-      const diff = summerBreak - now;
-
-      if (diff <= 0) {
-        document.getElementById("countdown").textContent = "КАНИКУЛЫ УЖЕ НАЧАЛИСЬ! 🎉";
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
-
-      document.getElementById("countdown").textContent =
-        `До каникул: ${days}д ${hours}ч ${minutes}м ${seconds}с`;
-    }
-
-    setInterval(updateClock, 1000);
-    setInterval(updateCountdown, 1000);
-    updateClock();
-    updateCountdown();
+    setInterval(createHeart, 400);
   </script>
 
 </body>
